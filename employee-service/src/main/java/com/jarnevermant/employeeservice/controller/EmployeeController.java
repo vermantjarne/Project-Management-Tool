@@ -24,8 +24,15 @@ public class EmployeeController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<EmployeeResponse> getAllProducts() {
+    public List<EmployeeResponse> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public List<EmployeeResponse> getEmployeesByEmployeeIdentifiers(@RequestParam List<String> employeeIdentifier) {
+        return employeeService.getEmployeesByEmployeeIdentifiers(employeeIdentifier);
+    }
+
 }
 

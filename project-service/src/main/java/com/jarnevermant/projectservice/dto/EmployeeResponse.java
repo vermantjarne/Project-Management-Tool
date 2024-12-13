@@ -1,4 +1,4 @@
-package com.jarnevermant.employeeservice.dto;
+package com.jarnevermant.projectservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
