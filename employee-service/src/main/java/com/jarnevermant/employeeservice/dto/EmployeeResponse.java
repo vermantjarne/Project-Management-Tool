@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeResponse {
-    private String id;
+    private String employeeIdentifier;
     private String firstName;
     private String lastName;
     private String role;
