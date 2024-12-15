@@ -2,7 +2,7 @@ package com.jarnevermant.employeeservice.service;
 
 import com.jarnevermant.employeeservice.dto.EmployeeRequest;
 import com.jarnevermant.employeeservice.dto.EmployeeResponse;
-import com.jarnevermant.employeeservice.exception.EmployeeException;
+import com.jarnevermant.employeeservice.exception.EmployeeNotFoundException;
 import com.jarnevermant.employeeservice.model.Employee;
 import com.jarnevermant.employeeservice.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,7 @@ public class EmployeeService {
     @Transactional(readOnly = true)
     public EmployeeResponse getEmployeeByEmployeeIdentifier(String employeeIdentifier) {
         Employee employee = employeeRepository.findByEmployeeIdentifier(employeeIdentifier)
-                .orElseThrow(() -> new EmployeeException("Employee does not exist"));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee does not exist"));
         return this.mapToEmployeeResponse(employee);
     }
 
@@ -55,7 +55,7 @@ public class EmployeeService {
     @Transactional
     public EmployeeResponse updateEmployeeRole(String employeeIdentifier, String newRole) {
         Employee employee = employeeRepository.findByEmployeeIdentifier(employeeIdentifier)
-                .orElseThrow(() -> new EmployeeException("Employee does not exist"));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee does not exist"));
 
         employee.setRole(newRole);
         employeeRepository.save(employee);
@@ -66,7 +66,7 @@ public class EmployeeService {
     @Transactional
     public void deleteEmployee(String employeeIdentifier) {
         if (!employeeRepository.existsByEmployeeIdentifier(employeeIdentifier)) {
-            throw new EmployeeException("Employee does not exist");
+            throw new EmployeeNotFoundException("Employee does not exist");
         }
         employeeRepository.deleteByEmployeeIdentifier(employeeIdentifier);
     }

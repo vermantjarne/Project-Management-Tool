@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EmployeeException.class)
-    public ResponseEntity<ErrorDetails> handleEmployeeException(EmployeeException exception, WebRequest webRequest) {
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleEmployeeException(EmployeeNotFoundException exception, WebRequest webRequest) {
         ErrorDetails errorDetails = new ErrorDetails(
                 LocalDateTime.now(),
                 exception.getMessage(),
