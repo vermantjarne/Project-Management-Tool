@@ -40,9 +40,9 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
-    public EmployeeResponse getEmployeeByEmployeeIdentifier(String employeeIdentifier) {
+    public EmployeeResponse getEmployee(String employeeIdentifier) {
         Employee employee = employeeRepository.findByEmployeeIdentifier(employeeIdentifier)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee does not exist"));
+                .orElseThrow(() -> new EmployeeNotFoundException("The employee does not exist"));
         return this.mapToEmployeeResponse(employee);
     }
 
@@ -55,7 +55,7 @@ public class EmployeeService {
     @Transactional
     public EmployeeResponse updateEmployeeRole(String employeeIdentifier, String newRole) {
         Employee employee = employeeRepository.findByEmployeeIdentifier(employeeIdentifier)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee does not exist"));
+                .orElseThrow(() -> new EmployeeNotFoundException("The employee does not exist"));
 
         employee.setRole(newRole);
         employeeRepository.save(employee);
@@ -66,7 +66,7 @@ public class EmployeeService {
     @Transactional
     public void deleteEmployee(String employeeIdentifier) {
         if (!employeeRepository.existsByEmployeeIdentifier(employeeIdentifier)) {
-            throw new EmployeeNotFoundException("Employee does not exist");
+            throw new EmployeeNotFoundException("The employee does not exist");
         }
         employeeRepository.deleteByEmployeeIdentifier(employeeIdentifier);
     }

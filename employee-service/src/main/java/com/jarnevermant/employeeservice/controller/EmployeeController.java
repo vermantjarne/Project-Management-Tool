@@ -31,8 +31,8 @@ public class EmployeeController {
 
     @GetMapping("/{employeeIdentifier}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeResponse getEmployeeByEmployeeIdentifier(@PathVariable String employeeIdentifier) {
-        return employeeService.getEmployeeByEmployeeIdentifier(employeeIdentifier);
+    public EmployeeResponse getEmployee(@PathVariable String employeeIdentifier) {
+        return employeeService.getEmployee(employeeIdentifier);
     }
 
     @GetMapping()
