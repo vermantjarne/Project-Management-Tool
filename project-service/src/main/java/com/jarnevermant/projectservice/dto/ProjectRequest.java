@@ -16,5 +16,5 @@ public class ProjectRequest {
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String projectLeadEmployeeIdentifier;
+    private String projectLead;
 }

@@ -12,10 +12,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectResponse {
-    private String projectNumber;
+    private String projectIdentifier;
     private String name;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String projectLeadEmployeeIdentifier;
+    private String projectLead;
 }

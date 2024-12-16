@@ -17,12 +17,12 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String projectNumber;
+    private String projectIdentifier;
 
     private String name;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String projectLeadEmployeeIdentifier;
+    private String projectLead;
 
 }
