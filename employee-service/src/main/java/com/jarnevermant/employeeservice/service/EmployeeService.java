@@ -2,7 +2,7 @@ package com.jarnevermant.employeeservice.service;
 
 import com.jarnevermant.employeeservice.dto.EmployeeRequest;
 import com.jarnevermant.employeeservice.dto.EmployeeResponse;
-import com.jarnevermant.employeeservice.exception.EmployeeException;
+import com.jarnevermant.employeeservice.exception.EmployeeNotFoundException;
 import com.jarnevermant.employeeservice.model.Employee;
 import com.jarnevermant.employeeservice.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +40,9 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
-    public EmployeeResponse getEmployeeByEmployeeIdentifier(String employeeIdentifier) {
+    public EmployeeResponse getEmployee(String employeeIdentifier) {
         Employee employee = employeeRepository.findByEmployeeIdentifier(employeeIdentifier)
-                .orElseThrow(() -> new EmployeeException("Employee does not exist"));
+                .orElseThrow(() -> new EmployeeNotFoundException("The employee does not exist"));
         return this.mapToEmployeeResponse(employee);
     }
 
@@ -53,20 +53,34 @@ public class EmployeeService {
     }
 
     @Transactional
-    public EmployeeResponse updateEmployeeRole(String employeeIdentifier, String newRole) {
+    public EmployeeResponse updateEmployee(String employeeIdentifier, EmployeeRequest employeeRequest) {
         Employee employee = employeeRepository.findByEmployeeIdentifier(employeeIdentifier)
-                .orElseThrow(() -> new EmployeeException("Employee does not exist"));
+                .orElseThrow(() -> new EmployeeNotFoundException("The employee does not exist"));
 
-        employee.setRole(newRole);
+        // Handle optional fields
+        if (employeeRequest.getFirstName() != null) {
+            employee.setFirstName(employeeRequest.getFirstName());
+        }
+        if (employeeRequest.getLastName() != null) {
+            employee.setLastName(employeeRequest.getLastName());
+        }
+        if (employeeRequest.getRole() != null) {
+
+            employee.setRole(employeeRequest.getRole());
+        }
+        if (employeeRequest.getStartDate() != null) {
+            employee.setStartDate(employeeRequest.getStartDate());
+        }
+
         employeeRepository.save(employee);
 
-        return mapToEmployeeResponse(employee);
+        return this.mapToEmployeeResponse(employee);
     }
 
     @Transactional
     public void deleteEmployee(String employeeIdentifier) {
         if (!employeeRepository.existsByEmployeeIdentifier(employeeIdentifier)) {
-            throw new EmployeeException("Employee does not exist");
+            throw new EmployeeNotFoundException("The employee does not exist");
         }
         employeeRepository.deleteByEmployeeIdentifier(employeeIdentifier);
     }

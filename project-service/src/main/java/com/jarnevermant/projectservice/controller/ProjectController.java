@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -23,10 +24,40 @@ public class ProjectController {
         projectService.createProject(projectRequest);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectResponse> getAllProjects() {
         return projectService.getAllProjects();
+    }
+
+    @GetMapping("/active")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjectResponse> getActiveProjects() {
+        return projectService.getActiveProjects();
+    }
+
+    @GetMapping("/{projectIdentifier}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProjectResponse getProject(@PathVariable String projectIdentifier) {
+        return projectService.getProject(projectIdentifier);
+    }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjectResponse> searchProjectsByProjectLead(@RequestParam String search) {
+        return projectService.searchProjectsByProjectLead(search);
+    }
+
+    @PutMapping("/{projectIdentifier}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProjectResponse updateProject(@PathVariable String projectIdentifier, @RequestBody ProjectRequest projectRequest) {
+        return projectService.updateProject(projectIdentifier, projectRequest);
+    }
+
+    @DeleteMapping("/{projectIdentifier}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteProject(@PathVariable String projectIdentifier) {
+        projectService.deleteProject(projectIdentifier);
     }
 
 }

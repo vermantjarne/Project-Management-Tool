@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Document(value = "employee")
@@ -21,5 +22,5 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String role;
-    private Date startDate;
+    private LocalDate startDate;
 }
