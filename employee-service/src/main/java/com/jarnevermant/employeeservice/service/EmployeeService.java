@@ -53,14 +53,28 @@ public class EmployeeService {
     }
 
     @Transactional
-    public EmployeeResponse updateEmployeeRole(String employeeIdentifier, String newRole) {
+    public EmployeeResponse updateEmployee(String employeeIdentifier, EmployeeRequest employeeRequest) {
         Employee employee = employeeRepository.findByEmployeeIdentifier(employeeIdentifier)
                 .orElseThrow(() -> new EmployeeNotFoundException("The employee does not exist"));
 
-        employee.setRole(newRole);
+        // Handle optional fields
+        if (employeeRequest.getFirstName() != null) {
+            employee.setFirstName(employeeRequest.getFirstName());
+        }
+        if (employeeRequest.getLastName() != null) {
+            employee.setLastName(employeeRequest.getLastName());
+        }
+        if (employeeRequest.getRole() != null) {
+
+            employee.setRole(employeeRequest.getRole());
+        }
+        if (employeeRequest.getStartDate() != null) {
+            employee.setStartDate(employeeRequest.getStartDate());
+        }
+
         employeeRepository.save(employee);
 
-        return mapToEmployeeResponse(employee);
+        return this.mapToEmployeeResponse(employee);
     }
 
     @Transactional

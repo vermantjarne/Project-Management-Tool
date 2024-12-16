@@ -2,7 +2,6 @@ package com.jarnevermant.employeeservice.controller;
 
 import com.jarnevermant.employeeservice.dto.EmployeeRequest;
 import com.jarnevermant.employeeservice.dto.EmployeeResponse;
-import com.jarnevermant.employeeservice.dto.UpdateRoleRequest;
 import com.jarnevermant.employeeservice.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,8 +42,8 @@ public class EmployeeController {
 
     @PutMapping("/{employeeIdentifier}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeResponse updateEmployee(@PathVariable String employeeIdentifier, @RequestBody UpdateRoleRequest updateRoleRequest) {
-        return employeeService.updateEmployeeRole(employeeIdentifier, updateRoleRequest.getRole());
+    public EmployeeResponse updateEmployee(@PathVariable String employeeIdentifier, @RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.updateEmployee(employeeIdentifier, employeeRequest);
     }
 
     @DeleteMapping("/{employeeIdentifier}")
