@@ -9,6 +9,7 @@ import com.jarnevermant.projectservice.exception.ProjectNotFoundException;
 import com.jarnevermant.projectservice.model.Project;
 import com.jarnevermant.projectservice.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -28,6 +29,9 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final WebClient webClient;
+
+    @Value("${employeeservice.baseurl}")
+    private String employeeServiceBaseUrl;
 
     @Transactional
     public void createProject(ProjectRequest projectRequest) {
@@ -134,7 +138,7 @@ public class ProjectService {
 
     private EmployeeResponse fetchEmployeeByEmployeeIdentifier(String employeeIdentifier) {
         return webClient.get()
-                .uri("http://localhost:8080/api/employee",
+                .uri("http://" + employeeServiceBaseUrl + "/api/employee",
                         uriBuilder -> uriBuilder.pathSegment(employeeIdentifier).build())
                 .retrieve()
                 .onStatus(
@@ -147,7 +151,7 @@ public class ProjectService {
 
     private List<EmployeeResponse> fetchEmployeesByName(String searchTerm) {
         return webClient.get()
-                .uri("http://localhost:8080/api/employee",
+                .uri("http://" + employeeServiceBaseUrl + "/api/employee",
                         uriBuilder -> uriBuilder.queryParam("search", searchTerm).build())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<EmployeeResponse>>() {})

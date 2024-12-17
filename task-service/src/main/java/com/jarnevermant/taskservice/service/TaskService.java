@@ -10,6 +10,7 @@ import com.jarnevermant.taskservice.exception.TaskNotFoundException;
 import com.jarnevermant.taskservice.model.Task;
 import com.jarnevermant.taskservice.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,11 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final WebClient webClient;
+
+    @Value("${projectservice.baseurl}")
+    private String projectServiceBaseUrl;
+    @Value("${employeeservice.baseurl}")
+    private String employeeServiceBaseUrl;
 
     @Transactional
     public void createTask(TaskRequest taskRequest) {
@@ -131,7 +137,7 @@ public class TaskService {
 
     private ProjectResponse fetchProjectByProjectIdentifier(String projectIdentifier) {
         return webClient.get()
-                .uri("http://localhost:8081/api/project",
+                .uri("http://" + projectServiceBaseUrl + "/api/project",
                         uriBuilder -> uriBuilder.pathSegment(projectIdentifier).build())
                 .retrieve()
                 .onStatus(
@@ -144,7 +150,7 @@ public class TaskService {
 
     private EmployeeResponse fetchEmployeeByEmployeeIdentifier(String employeeIdentifier) {
         return webClient.get()
-                .uri("http://localhost:8080/api/employee",
+                .uri("http://" + employeeServiceBaseUrl + "/api/employee",
                         uriBuilder -> uriBuilder.pathSegment(employeeIdentifier).build())
                 .retrieve()
                 .onStatus(
