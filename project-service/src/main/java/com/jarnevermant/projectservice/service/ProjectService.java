@@ -34,9 +34,6 @@ public class ProjectService {
         String employeeIdentifier = projectRequest.getProjectLead();
         EmployeeResponse employeeResponse = fetchEmployeeByEmployeeIdentifier(employeeIdentifier);
 
-        if (employeeResponse == null) {
-            throw new EmployeeNotFoundException("The employee does not exist");
-        }
         if (!employeeResponse.getRole().equals("Project Lead")) {
             throw new InvalidEmployeeRoleException("The employee does not have the role of Project Lead");
         }
