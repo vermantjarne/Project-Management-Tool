@@ -4,8 +4,8 @@ server:
 logging:
   level:
     root: INFO
-    org.springframework.cloud.gateway: INFO
-    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: DEBUG
     reactor.netty: INFO
     org.springframework.security: TRACE
 
