@@ -73,7 +73,7 @@ services:
       MYSQL_DB_HOST: mysql-task
       # LOCAL: 3306
 			# DEPLOYMENT: 3307
-      MYSQL_DB_PORT: 3306
+      MYSQL_DB_PORT: 3307
 
   api-gateway:
     depends_on:
