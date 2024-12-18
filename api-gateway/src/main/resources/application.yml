@@ -27,9 +27,9 @@ spring:
     gateway:
       routes:
         - id: employee-service-all
-          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
+          uri: http://localhost:8080
           predicates:
             - Path=/employee
             - Method=GET
-          #filters:
-          #  - SetPath=/api/employee/all
+          filters:
+            - SetPath=/api/employee/all
