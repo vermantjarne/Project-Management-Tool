@@ -4,8 +4,8 @@ server:
 logging:
   level:
     root: INFO
-    org.springframework.cloud.gateway: DEBUG
-    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: DEBUG
+    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
     reactor.netty: INFO
     org.springframework.security: TRACE
 
@@ -27,7 +27,7 @@ spring:
     gateway:
       routes:
         - id: employee-service-all
-          uri: http://localhost:8080
+          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
           predicates:
             - Path=/employee
             - Method=GET
