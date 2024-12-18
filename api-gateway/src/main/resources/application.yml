@@ -31,5 +31,5 @@ spring:
           predicates:
             - Path=/employee
             - Method=GET
-          filters:
-            - SetPath=/api/employee/all
+          #filters:
+          #  - SetPath=/api/employee/all
