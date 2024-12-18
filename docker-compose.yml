@@ -1,79 +1,79 @@
 services:
- mongo-employee:
-  image: mongo:latest
-  ports:
-    - 27017:27017
-  volumes:
-    - mongodb_employee_data:/data/db
+  mongo-employee:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_employee_data:/data/db
     
- mysql-project:
-  image: mysql:latest
-  ports:
-    - 3306:3306
-  volumes:
-    - mysql_project_data:/var/lib/mysql
-  environment:
-   MYSQL_ROOT_PASSWORD: abc123
+  mysql-project:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_project_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
     
- mysql-task:
-  image: mysql:latest
-  ports:
-    - 3307:3306
-  volumes:
-    - mysql_task_data:/var/lib/mysql
-  environment:
-   MYSQL_ROOT_PASSWORD: abc123
+  mysql-task:
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql_task_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
     
- employee-service:
-  depends_on:
-    - mongo-employee
-  image: jarnevermant/employee-service
-  ports:
-    - 8080:8080
-  links:
-    - mongo-employee
-  environment:
-   MONGO_DB_HOST: mongo-employee
-   MONGO_DB_PORT: 27017
+  employee-service:
+    depends_on:
+      - mongo-employee
+    image: jarnevermant/employee-service
+    ports:
+      - 8080:8080
+    links:
+      - mongo-employee
+    environment:
+      MONGO_DB_HOST: mongo-employee
+      MONGO_DB_PORT: 27017
    
- project-service:
-  depends_on:
-    - mysql-project
-    - employee-service
-  image: jarnevermant/project-service
-  ports:
-    - 8081:8081
-  links:
-    - mysql-project
-		- employee-service
-  environment:
-   EMPLOYEE_SERVICE_BASEURL: employee-service:8080
-   MYSQL_DB_USERNAME: root
-   MYSQL_DB_PASSWORD: abc123
-   MYSQL_DB_HOST: mysql-project
-   MYSQL_DB_PORT: 3306
+  project-service:
+    depends_on:
+      - mysql-project
+      - employee-service
+    image: jarnevermant/project-service
+    ports:
+      - 8081:8081
+    links:
+      - mysql-project
+      - employee-service
+    environment:
+      EMPLOYEE_SERVICE_BASEURL: employee-service:8080
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: abc123
+      MYSQL_DB_HOST: mysql-project
+      MYSQL_DB_PORT: 3306
 
- task-service:
-  depends_on:
-		- mysql-task
-		- employee-service
-    - project-service
-  image: jarnevermant/task-service
-  ports:
-    - 8082:8082
-  links:
-    - mysql-task
-		- employee-service
-    - project-service
-  environment:
-   EMPLOYEE_SERVICE_BASEURL: employee-service:8080
-   PROJECT_SERVICE_BASEURL: project-service:8081
-   MYSQL_DB_USERNAME: root
-   MYSQL_DB_PASSWORD: abc123
-   MYSQL_DB_HOST: mysql-task
-   MYSQL_DB_PORT: 3307
+  task-service:
+    depends_on:
+      - mysql-task
+      - employee-service
+      - project-service
+    image: jarnevermant/task-service
+    ports:
+      - 8082:8082
+    links:
+      - mysql-task
+      - employee-service
+      - project-service
+    environment:
+      EMPLOYEE_SERVICE_BASEURL: employee-service:8080
+      PROJECT_SERVICE_BASEURL: project-service:8081
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: abc123
+      MYSQL_DB_HOST: mysql-task
+      MYSQL_DB_PORT: 3307
 
 volumes:
- mongodb_employee_data:
- mysql_project_data:
- mysql_task_data:
+  mongodb_employee_data:
+  mysql_project_data:
+  mysql_task_data:
