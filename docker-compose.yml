@@ -71,7 +71,26 @@ services:
       MYSQL_DB_USERNAME: root
       MYSQL_DB_PASSWORD: abc123
       MYSQL_DB_HOST: mysql-task
+      # LOCAL: 3306
+			# DEPLOYMENT: 3307
       MYSQL_DB_PORT: 3307
+
+  api-gateway:
+    depends_on:
+      - employee-service
+      - project-service
+      - task-service
+    image: miverboven/ede-api-gateway
+    ports:
+      - 8083:8083
+    links:
+      - employee-service
+      - project-service
+      - task-service
+    environment:
+      EMPLOYEE_SERVICE_BASEURL: employee-service:8080
+      PROJECT_SERVICE_BASEURL: project-service:8081
+      TASK_SERVICE_BASEURL: task-service:8082
 
 volumes:
   mongodb_employee_data:
