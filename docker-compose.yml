@@ -96,3 +96,7 @@ volumes:
   mongodb_employee_data:
   mysql_project_data:
   mysql_task_data:
+
+networks:
+  app-network:
+    driver: bridge
