@@ -27,7 +27,7 @@ services:
  employee-service:
   depends_on:
     - mongo-employee
-  image: miverboven/employee-service
+  image: jarnevermant/employee-service
   ports:
     - 8080:8080
   links:
@@ -40,7 +40,7 @@ services:
   depends_on:
     - mysql-project
     - employee-service
-  image: miverboven/project-service
+  image: jarnevermant/project-service
   ports:
     - 8081:8081
   links:
@@ -57,7 +57,7 @@ services:
   depends_on:
 		- mysql-task
     - project-service
-  image: miverboven/task-service
+  image: jarnevermant/task-service
   ports:
     - 8082:8082
   links:
