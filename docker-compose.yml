@@ -73,14 +73,14 @@ services:
       MYSQL_DB_HOST: mysql-task
       # LOCAL: 3306
 			# DEPLOYMENT: 3307
-      MYSQL_DB_PORT: 3307
+      MYSQL_DB_PORT: 3306
 
   api-gateway:
     depends_on:
       - employee-service
       - project-service
       - task-service
-    image: miverboven/ede-api-gateway
+    image: jarnevermant/api-gateway
     ports:
       - 8083:8083
     links:

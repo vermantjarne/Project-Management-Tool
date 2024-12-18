@@ -26,21 +26,28 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: employee-service
+        - id: employee-service-all
           uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/employee/**
+            - Path=/employee
+            - Method=GET
           filters:
-            - SetPath=/api/employee/{segment}
-        - id: project-service
-          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
-          predicates:
-            - Path=/project/**
-          filters:
-            - SetPath=/api/project/{segment}
-        - id: task-service
-          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
-          predicates:
-            - Path=/task/**
-          filters:
-            - SetPath=/api/task/{segment}
+            - SetPath=/api/employee/all
+#        - id: employee-service
+#          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
+#          predicates:
+#            - Path=/employee/**
+#          filters:
+#            - SetPath=/api/employee/{segment}
+#        - id: project-service
+#          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+#          predicates:
+#            - Path=/project/**
+#          filters:
+#            - SetPath=/api/project/{segment}
+#        - id: task-service
+#          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
+#          predicates:
+#            - Path=/task/**
+#          filters:
+#            - SetPath=/api/task/{segment
