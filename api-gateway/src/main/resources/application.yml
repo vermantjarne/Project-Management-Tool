@@ -26,10 +26,119 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: employee-service-all
+        # CREATE employee
+        - id: employee-service-create
+          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/employee
+            - Method=POST
+
+        # GET all employees
+        - id: employee-service-get-all
           uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
           predicates:
             - Path=/employee
             - Method=GET
           filters:
             - SetPath=/api/employee/all
+
+        # GET employee by ID
+        - id: employee-service-get-by-id
+          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/employee/{id}
+            - Method=GET
+          filters:
+            - SetPath=/api/employee/{id}
+
+        # UPDATE employee
+        - id: employee-service-update
+          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/employee/{id}
+            - Method=PUT
+
+        # DELETE employee
+        - id: employee-service-delete
+          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/employee/{id}
+            - Method=DELETE
+
+        # CREATE project
+        - id: project-service-create
+          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/project
+            - Method=POST
+
+        # GET all projects
+        - id: project-service-get-all
+          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/project
+            - Method=GET
+          filters:
+            - SetPath=/api/project/all
+
+        # GET project by ID
+        - id: project-service-get-by-id
+          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/project/{id}
+            - Method=GET
+          filters:
+            - SetPath=/api/project/{id}
+
+        # UPDATE project
+        - id: project-service-update
+          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/project/{id}
+            - Method=PUT
+
+        # DELETE project
+        - id: project-service-delete
+          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/project/{id}
+            - Method=DELETE
+
+        # CREATE task
+        - id: task-service-create
+          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/task
+            - Method=POST
+
+        # GET all tasks
+        - id: task-service-get-all
+          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/task
+            - Method=GET
+          filters:
+            - SetPath=/api/task/all
+
+        # GET task by ID
+        - id: task-service-get-by-id
+          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/task/{id}
+            - Method=GET
+          filters:
+            - SetPath=/api/task/{id}
+
+        # UPDATE task
+        - id: task-service-update
+          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/task/{id}
+            - Method=PUT
+
+        # DELETE task
+        - id: task-service-delete
+          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/task/{id}
+            - Method=DELETE
