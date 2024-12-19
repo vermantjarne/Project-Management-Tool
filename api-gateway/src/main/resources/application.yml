@@ -32,6 +32,8 @@ spring:
           predicates:
             - Path=/employee
             - Method=POST
+          filters:
+            - SetPath=/api/employee
 
         # GET all employees
         - id: employee-service-get-all
@@ -57,6 +59,8 @@ spring:
           predicates:
             - Path=/employee/{id}
             - Method=PUT
+          filters:
+            - SetPath=/api/employee/{id}
 
         # DELETE employee
         - id: employee-service-delete
@@ -64,6 +68,8 @@ spring:
           predicates:
             - Path=/employee/{id}
             - Method=DELETE
+          filters:
+            - SetPath=/api/employee/{id}
 
         # CREATE project
         - id: project-service-create
@@ -71,6 +77,8 @@ spring:
           predicates:
             - Path=/project
             - Method=POST
+          filters:
+            - SetPath=/api/project
 
         # GET all projects
         - id: project-service-get-all
@@ -96,6 +104,8 @@ spring:
           predicates:
             - Path=/project/{id}
             - Method=PUT
+          filters:
+            - SetPath=/api/project/{id}
 
         # DELETE project
         - id: project-service-delete
@@ -103,6 +113,8 @@ spring:
           predicates:
             - Path=/project/{id}
             - Method=DELETE
+          filters:
+            - SetPath=/api/project/{id}
 
         # CREATE task
         - id: task-service-create
@@ -110,6 +122,8 @@ spring:
           predicates:
             - Path=/task
             - Method=POST
+          filters:
+            - SetPath=/api/task
 
         # GET all tasks
         - id: task-service-get-all
@@ -135,6 +149,8 @@ spring:
           predicates:
             - Path=/task/{id}
             - Method=PUT
+          filters:
+            - SetPath=/api/task/{id}
 
         # DELETE task
         - id: task-service-delete
@@ -142,3 +158,5 @@ spring:
           predicates:
             - Path=/task/{id}
             - Method=DELETE
+          filters:
+            - SetPath=/api/task/{id}
