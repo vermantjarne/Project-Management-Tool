@@ -115,26 +115,26 @@ Every endpoint, aside from the `GET` for `/employee`, requires an authenticated 
 - Docker image: `jarnevermant/api-gateway`
 
 ### API Endpoints
-| Method | Endpoint |
-| ------ | -------- |
-| `POST` | `/employee` |
-| `GET` | `/employee` |
-| `GET` | `/employee/{employeeIdentifier}` |
-| `UPDATE` | `/employee/{employeeIdentifier}` |
-| `DELETE` | `/employee/{employeeIdentifier}` |
-| `POST` | `/project` |
-| `GET` | `/project` |
-| `GET` | `/project/active` |
-| `GET` | `/project/{projectIdentifier}` |
-| `UPDATE` | `/project/{projectIdentifier}` |
-| `DELETE` | `/project/{projectIdentifier}` |
-| `POST` | `/task` |
-| `GET` | `/task` |
-| `GET` | `/task/active` |
-| `GET` | `/task/{taskIdentifier}` |
-| `GET` | `/task/project/{projectIdentifier}` |
-| `UPDATE` | `/task/{taskIdentifier}` |
-| `DELETE` | `/task/{taskIdentifier}` |
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| `POST` | `/employee` | Adds a new employee |
+| `GET` | `/employee` | Retrieves all employees |
+| `GET` | `/employee/{employeeIdentifier}` | Retrieves an employee by id |
+| `UPDATE` | `/employee/{employeeIdentifier}` | Updates an employee |
+| `DELETE` | `/employee/{employeeIdentifier}` | Removes an employee |
+| `POST` | `/project` | Creates a new project |
+| `GET` | `/project` | Retrieves all projects |
+| `GET` | `/project/active` | Retrieves all projects currently active |
+| `GET` | `/project/{projectIdentifier}` | Retrieves a project by id |
+| `UPDATE` | `/project/{projectIdentifier}` | Updates a project |
+| `DELETE` | `/project/{projectIdentifier}` | Deletes a project |
+| `POST` | `/task` | Creates a task |
+| `GET` | `/task` | Retrieves all tasks |
+| `GET` | `/task/active` | Retrieves all tasks with status "In Progress" |
+| `GET` | `/task/{taskIdentifier}` | Retrieves a task by id |
+| `GET` | `/task/project/{projectIdentifier}` | Retrieves all tasks of a project |
+| `UPDATE` | `/task/{taskIdentifier}` | Updates a task |
+| `DELETE` | `/task/{taskIdentifier}` | Deletes a task |
 
 
 ## Postman Screenshots
