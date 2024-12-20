@@ -51,7 +51,6 @@ class EmployeeServiceApplicationTests {
 	public void testGetAllEmployees() {
 		// Arrange
 		Employee employee = new Employee();
-		employee.setId("1");
 		employee.setEmployeeIdentifier("EMP-123");
 		employee.setFirstName("Bertha");
 		employee.setLastName("Powells");
@@ -75,12 +74,106 @@ class EmployeeServiceApplicationTests {
 	}
 
 	@Test
+	public void testGetEmployee_Success() {
+		// Arrange
+		String employeeIdentifier = "EMP-123";
+
+		Employee employee = new Employee();
+		employee.setEmployeeIdentifier(employeeIdentifier);
+		employee.setFirstName("Bertha");
+		employee.setLastName("Powells");
+		employee.setRole("Developer");
+		employee.setStartDate(LocalDate.of(2024, 12, 28));
+
+		when(employeeRepository.findByEmployeeIdentifier(employeeIdentifier)).thenReturn(Optional.of(employee));
+
+		// Act
+		EmployeeResponse employeeResponse = employeeService.getEmployee(employeeIdentifier);
+
+		// Assert
+		assertEquals("EMP-123", employeeResponse.getEmployeeIdentifier());
+		assertEquals("Bertha", employeeResponse.getFirstName());
+		assertEquals("Powells", employeeResponse.getLastName());
+		assertEquals("Developer", employeeResponse.getRole());
+		assertEquals(LocalDate.of(2024, 12, 28), employeeResponse.getStartDate());
+
+		verify(employeeRepository, times(1)).findByEmployeeIdentifier(employeeIdentifier);
+	}
+
+	@Test
+	public void testGetEmployee_EmployeeNotFound() {
+		// Arrange
+		String employeeIdentifier = "EMP-123";
+
+		when(employeeRepository.findByEmployeeIdentifier(employeeIdentifier)).thenReturn(Optional.empty());
+
+		// Act & Assert
+		EmployeeNotFoundException thrown = assertThrows(EmployeeNotFoundException.class, () -> {
+			employeeService.getEmployee(employeeIdentifier);
+		});
+
+		assertEquals("The employee does not exist", thrown.getMessage());
+
+		verify(employeeRepository, times(1)).findByEmployeeIdentifier(employeeIdentifier);
+	}
+
+	@Test
+	public void testSearchEmployees_Found() {
+		// Arrange
+		String searchTerm = "pow";
+
+		Employee employee1 = new Employee();
+		employee1.setEmployeeIdentifier("EMP-123");
+		employee1.setFirstName("Bertha");
+		employee1.setLastName("Powells");
+		employee1.setRole("Developer");
+		employee1.setStartDate(LocalDate.of(2024, 12, 28));
+
+		Employee employee2 = new Employee();
+		employee2.setEmployeeIdentifier("EMP-456");
+		employee2.setFirstName("Nicholas");
+		employee2.setLastName("Thompson");
+		employee2.setRole("Developer");
+		employee2.setStartDate(LocalDate.of(2024, 12, 30));
+
+		when(employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm))
+				.thenReturn(Arrays.asList(employee1, employee2));
+
+		// Act
+		List<EmployeeResponse> employeeResponses = employeeService.searchEmployees(searchTerm);
+
+		// Assert
+		assertEquals(2, employeeResponses.size());
+		assertEquals("EMP-123", employeeResponses.get(0).getEmployeeIdentifier());
+		assertEquals("EMP-456", employeeResponses.get(1).getEmployeeIdentifier());
+
+		verify(employeeRepository, times(1))
+				.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm);
+	}
+
+	@Test
+	public void testSearchEmployees_NotFound() {
+		// Arrange
+		String searchTerm = "pow";
+
+		when(employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm))
+				.thenReturn(List.of());
+
+		// Act
+		List<EmployeeResponse> employeeResponses = employeeService.searchEmployees(searchTerm);
+
+		// Assert
+		assertEquals(0, employeeResponses.size());
+		verify(employeeRepository, times(1))
+				.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm);
+	}
+
+	@Test
 	public void testUpdateEmployee_Success() {
 		// Arrange
 		String employeeIdentifier = "EMP-123";
 
 		Employee employee = new Employee();
-		employee.setId("1");
 		employee.setEmployeeIdentifier(employeeIdentifier);
 		employee.setFirstName("Bertha");
 		employee.setLastName("Powells");

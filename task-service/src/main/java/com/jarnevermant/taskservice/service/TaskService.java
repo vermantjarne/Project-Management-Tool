@@ -70,7 +70,7 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
-    public TaskResponse getTaskBy(String taskIdentifier) {
+    public TaskResponse getTask(String taskIdentifier) {
         Task task = taskRepository.findByTaskIdentifier(taskIdentifier)
                 .orElseThrow(() -> new TaskNotFoundException("The task does not exist"));
         return this.mapToTaskResponse(task);

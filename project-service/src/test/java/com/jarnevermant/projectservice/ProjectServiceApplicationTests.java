@@ -140,6 +140,153 @@ class ProjectServiceApplicationTests {
     }
 
     @Test
+    public void testGetActiveProjects_Success() {
+        // Arrange
+        LocalDate today = LocalDate.now();
+
+        Project project = new Project();
+        project.setProjectIdentifier("PROJ-123");
+        project.setName("Website");
+        project.setDescription("A complete overhaul of our company's website.");
+        project.setStartDate(today.minusDays(10));
+        project.setEndDate(today.plusDays(10));
+        project.setProjectLead("EMP-123");
+
+        when(projectRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(today, today))
+                .thenReturn(List.of(project));
+
+        // Act
+        List<ProjectResponse> activeProjects = projectService.getActiveProjects();
+
+        // Assert
+        assertEquals(1, activeProjects.size());
+        assertEquals("PROJ-123", activeProjects.get(0).getProjectIdentifier());
+        assertEquals("Website", activeProjects.get(0).getName());
+
+        verify(projectRepository, times(1))
+                .findByStartDateLessThanEqualAndEndDateGreaterThanEqual(today, today);
+    }
+
+    @Test
+    public void testGetActiveProjects_NoProjects() {
+        // Arrange
+        LocalDate today = LocalDate.now();
+
+        when(projectRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(today, today))
+                .thenReturn(List.of());
+
+        // Act
+        List<ProjectResponse> activeProjects = projectService.getActiveProjects();
+
+        // Assert
+        assertTrue(activeProjects.isEmpty());
+        verify(projectRepository, times(1))
+                .findByStartDateLessThanEqualAndEndDateGreaterThanEqual(today, today);
+    }
+
+    @Test
+    public void testGetProject_Success() {
+        // Arrange
+        String projectIdentifier = "PROJ-123";
+
+        Project project = new Project();
+        project.setProjectIdentifier(projectIdentifier);
+        project.setName("Website");
+        project.setDescription("A complete overhaul of our company's website.");
+        project.setStartDate(LocalDate.of(2025, 1, 1));
+        project.setEndDate(LocalDate.of(2025, 6, 30));
+        project.setProjectLead("EMP-123");
+
+        when(projectRepository.findByProjectIdentifier(projectIdentifier)).thenReturn(Optional.of(project));
+
+        // Act
+        ProjectResponse projectResponse = projectService.getProject(projectIdentifier);
+
+        // Assert
+        assertEquals("PROJ-123", projectResponse.getProjectIdentifier());
+        assertEquals("Website", projectResponse.getName());
+
+        verify(projectRepository, times(1)).findByProjectIdentifier(projectIdentifier);
+    }
+
+    @Test
+    public void testGetProject_ProjectNotFound() {
+        // Arrange
+        String projectIdentifier = "PROJ-123";
+
+        when(projectRepository.findByProjectIdentifier(projectIdentifier)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        ProjectNotFoundException thrown = assertThrows(ProjectNotFoundException.class, () -> {
+            projectService.getProject(projectIdentifier);
+        });
+
+        assertEquals("The project does not exist", thrown.getMessage());
+
+        verify(projectRepository, times(1)).findByProjectIdentifier(projectIdentifier);
+    }
+
+    @Test
+    public void testSearchProjectsByProjectLead_Success() {
+        // Arrange
+        String searchTerm = "pow";
+
+        EmployeeResponse employee1 = new EmployeeResponse();
+        employee1.setEmployeeIdentifier("EMP-123");
+        employee1.setFirstName("Bertha");
+        employee1.setLastName("Powells");
+
+        EmployeeResponse employee2 = new EmployeeResponse();
+        employee2.setEmployeeIdentifier("EMP-456");
+        employee2.setFirstName("Nicholas");
+        employee2.setLastName("Thompson");
+
+        when(projectService.fetchEmployeesByName(searchTerm)).thenReturn(List.of(employee1, employee2));
+
+        Project project1 = new Project();
+        project1.setProjectIdentifier("PROJ-123");
+        project1.setName("Website");
+        project1.setDescription("A complete overhaul of our company's website.");
+        project1.setProjectLead("EMP-123");
+
+        Project project2 = new Project();
+        project2.setProjectIdentifier("PROJ-456");
+        project2.setName("Project Management Tool Frontend");
+        project2.setDescription("A frontend application for our company's project management tool.");
+        project2.setProjectLead("EMP-456");
+
+        when(projectRepository.findProjectsByProjectLeadIn(List.of("EMP-123", "EMP-456")))
+                .thenReturn(List.of(project1, project2));
+
+        // Act
+        List<ProjectResponse> projects = projectService.searchProjectsByProjectLead(searchTerm);
+
+        // Assert
+        assertEquals(2, projects.size());
+        assertEquals("PROJ-123", projects.get(0).getProjectIdentifier());
+        assertEquals("PROJ-456", projects.get(1).getProjectIdentifier());
+
+        verify(projectRepository, times(1)).findProjectsByProjectLeadIn(List.of("EMP-123", "EMP-456"));
+    }
+
+    @Test
+    public void testSearchProjectsByProjectLead_NotFound() {
+        // Arrange
+        String searchTerm = "pow";
+
+        when(projectService.fetchEmployeesByName(searchTerm)).thenReturn(List.of());
+
+        when(projectRepository.findProjectsByProjectLeadIn(List.of())).thenReturn(List.of());
+
+        // Act
+        List<ProjectResponse> projects = projectService.searchProjectsByProjectLead(searchTerm);
+
+        // Assert
+        assertTrue(projects.isEmpty());
+        verify(projectRepository, times(1)).findProjectsByProjectLeadIn(List.of());
+    }
+
+    @Test
     public void testUpdateProject_Success() {
         // Arrange
         String projectIdentifier = "PROJ-123";
