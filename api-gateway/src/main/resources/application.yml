@@ -53,6 +53,16 @@ spring:
           filters:
             - SetPath=/api/employee/{id}
 
+        # GET employee by name
+        - id: employee-service-get-by-name
+          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/employee
+            - Method=GET
+            - Query=name={name}
+          filters:
+            - SetPath=/api/employee?name={name}
+
         # UPDATE employee
         - id: employee-service-update
           uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
@@ -89,6 +99,15 @@ spring:
           filters:
             - SetPath=/api/project/all
 
+        # GET active projects
+        - id: project-service-get-active
+          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/project/active
+            - Method=GET
+          filters:
+            - SetPath=/api/project/active
+
         # GET project by ID
         - id: project-service-get-by-id
           uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
@@ -97,6 +116,16 @@ spring:
             - Method=GET
           filters:
             - SetPath=/api/project/{id}
+
+        # GET project by project lead
+        - id: project-service-get-by-lead
+          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/project
+            - Method=GET
+            - Query=projectLead={projectLead}
+          filters:
+            - SetPath=/api/project?projectLead={projectLead}
 
         # UPDATE project
         - id: project-service-update
@@ -134,6 +163,15 @@ spring:
           filters:
             - SetPath=/api/task/all
 
+        # GET active tasks
+        - id: task-service-get-active
+          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/task/active
+            - Method=GET
+          filters:
+            - SetPath=/api/task/active
+
         # GET task by ID
         - id: task-service-get-by-id
           uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
@@ -142,6 +180,15 @@ spring:
             - Method=GET
           filters:
             - SetPath=/api/task/{id}
+
+        # GET tasks by project
+        - id: task-service-get-by-project
+          uri: http://${TASK_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/task/project/{projectId}
+            - Method=GET
+          filters:
+            - SetPath=/api/task/project/{projectId}
 
         # UPDATE task
         - id: task-service-update
