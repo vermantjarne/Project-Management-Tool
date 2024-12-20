@@ -12,7 +12,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     boolean existsByProjectIdentifier(String projectIdentifier);
     List<Project> findByStartDateLessThanEqualAndEndDateGreaterThanEqual(LocalDate startDate, LocalDate endDate);
     Optional<Project> findByProjectIdentifier(String projectIdentifier);
-    List<Project> findProjectsByProjectLeadIn(List<String> employeeIdentifiers);
     void deleteByProjectIdentifier(String projectIdentifier);
 
 }
