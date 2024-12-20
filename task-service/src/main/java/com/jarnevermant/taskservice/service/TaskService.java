@@ -105,7 +105,7 @@ public class TaskService {
             task.setProject(taskRequest.getProject());
         }
         if (taskRequest.getEmployee() != null) {
-            fetchEmployeeByEmployeeIdentifier(taskRequest.getProject());
+            fetchEmployeeByEmployeeIdentifier(taskRequest.getEmployee());
             task.setEmployee(taskRequest.getEmployee());
         }
 
