@@ -34,12 +34,6 @@ public class EmployeeController {
         return employeeService.getEmployee(employeeIdentifier);
     }
 
-    @GetMapping()
-    @ResponseStatus(HttpStatus.OK)
-    public List<EmployeeResponse> searchEmployees(@RequestParam String name) {
-        return employeeService.searchEmployees(name);
-    }
-
     @PutMapping("/{employeeIdentifier}")
     @ResponseStatus(HttpStatus.OK)
     public EmployeeResponse updateEmployee(@PathVariable String employeeIdentifier, @RequestBody EmployeeRequest employeeRequest) {

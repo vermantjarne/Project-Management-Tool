@@ -13,7 +13,6 @@ public interface EmployeeRepository extends MongoRepository<Employee, String> {
 
     boolean existsByEmployeeIdentifier(String employeeIdentifier);
     Optional<Employee> findByEmployeeIdentifier(String employeeIdentifier);
-    List<Employee> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName);
     void deleteByEmployeeIdentifier(String employeeIdentifier);
 
 }

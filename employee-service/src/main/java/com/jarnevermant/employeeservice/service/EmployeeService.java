@@ -46,12 +46,6 @@ public class EmployeeService {
         return this.mapToEmployeeResponse(employee);
     }
 
-    @Transactional(readOnly = true)
-    public List<EmployeeResponse> searchEmployees(String searchTerm) {
-        List<Employee> employees = employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm);
-        return employees.stream().map(this::mapToEmployeeResponse).collect(Collectors.toList());
-    }
-
     @Transactional
     public EmployeeResponse updateEmployee(String employeeIdentifier, EmployeeRequest employeeRequest) {
         Employee employee = employeeRepository.findByEmployeeIdentifier(employeeIdentifier)

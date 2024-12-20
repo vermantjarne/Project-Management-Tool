@@ -74,15 +74,6 @@ public class ProjectService {
         return this.mapToProjectResponse(project);
     }
 
-    @Transactional(readOnly = true)
-    public List<ProjectResponse> searchProjectsByProjectLead(String searchTerm) {
-        List<EmployeeResponse> employees = this.fetchEmployeesByName(searchTerm);
-
-        return projectRepository.findProjectsByProjectLeadIn(
-                employees.stream().map(EmployeeResponse::getEmployeeIdentifier).toList()
-        ).stream().map(this::mapToProjectResponse).toList();
-    }
-
     @Transactional
     public ProjectResponse updateProject(String projectIdentifier, ProjectRequest projectRequest) {
         Project project = projectRepository.findByProjectIdentifier(projectIdentifier)

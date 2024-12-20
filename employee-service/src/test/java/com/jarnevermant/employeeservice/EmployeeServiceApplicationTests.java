@@ -118,57 +118,6 @@ class EmployeeServiceApplicationTests {
 	}
 
 	@Test
-	public void testSearchEmployees_Found() {
-		// Arrange
-		String searchTerm = "pow";
-
-		Employee employee1 = new Employee();
-		employee1.setEmployeeIdentifier("EMP-123");
-		employee1.setFirstName("Bertha");
-		employee1.setLastName("Powells");
-		employee1.setRole("Developer");
-		employee1.setStartDate(LocalDate.of(2024, 12, 28));
-
-		Employee employee2 = new Employee();
-		employee2.setEmployeeIdentifier("EMP-456");
-		employee2.setFirstName("Nicholas");
-		employee2.setLastName("Thompson");
-		employee2.setRole("Developer");
-		employee2.setStartDate(LocalDate.of(2024, 12, 30));
-
-		when(employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm))
-				.thenReturn(Arrays.asList(employee1, employee2));
-
-		// Act
-		List<EmployeeResponse> employeeResponses = employeeService.searchEmployees(searchTerm);
-
-		// Assert
-		assertEquals(2, employeeResponses.size());
-		assertEquals("EMP-123", employeeResponses.get(0).getEmployeeIdentifier());
-		assertEquals("EMP-456", employeeResponses.get(1).getEmployeeIdentifier());
-
-		verify(employeeRepository, times(1))
-				.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm);
-	}
-
-	@Test
-	public void testSearchEmployees_NotFound() {
-		// Arrange
-		String searchTerm = "pow";
-
-		when(employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm))
-				.thenReturn(List.of());
-
-		// Act
-		List<EmployeeResponse> employeeResponses = employeeService.searchEmployees(searchTerm);
-
-		// Assert
-		assertEquals(0, employeeResponses.size());
-		verify(employeeRepository, times(1))
-				.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchTerm, searchTerm);
-	}
-
-	@Test
 	public void testUpdateEmployee_Success() {
 		// Arrange
 		String employeeIdentifier = "EMP-123";

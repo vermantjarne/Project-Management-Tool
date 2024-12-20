@@ -42,12 +42,6 @@ public class ProjectController {
         return projectService.getProject(projectIdentifier);
     }
 
-    @GetMapping()
-    @ResponseStatus(HttpStatus.OK)
-    public List<ProjectResponse> searchProjectsByProjectLead(@RequestParam String projectLead) {
-        return projectService.searchProjectsByProjectLead(projectLead);
-    }
-
     @PutMapping("/{projectIdentifier}")
     @ResponseStatus(HttpStatus.OK)
     public ProjectResponse updateProject(@PathVariable String projectIdentifier, @RequestBody ProjectRequest projectRequest) {
