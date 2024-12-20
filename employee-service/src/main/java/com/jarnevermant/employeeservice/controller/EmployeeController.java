@@ -36,8 +36,8 @@ public class EmployeeController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<EmployeeResponse> searchEmployees(@RequestParam String search) {
-        return employeeService.searchEmployees(search);
+    public List<EmployeeResponse> searchEmployees(@RequestParam String name) {
+        return employeeService.searchEmployees(name);
     }
 
     @PutMapping("/{employeeIdentifier}")

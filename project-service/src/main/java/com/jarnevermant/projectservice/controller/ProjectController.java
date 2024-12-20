@@ -44,8 +44,8 @@ public class ProjectController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<ProjectResponse> searchProjectsByProjectLead(@RequestParam String search) {
-        return projectService.searchProjectsByProjectLead(search);
+    public List<ProjectResponse> searchProjectsByProjectLead(@RequestParam String projectLead) {
+        return projectService.searchProjectsByProjectLead(projectLead);
     }
 
     @PutMapping("/{projectIdentifier}")
