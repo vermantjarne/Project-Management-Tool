@@ -1,4 +1,4 @@
-# Project-Management-Tool
+# Project Management Tool
 The goal of the project is creating a solution for managing employees, projects and tasks within an organization. The system is structured as a microservices architecture to ensure scalability and maintainability for future adjustments.
 
 The application contains 3 microservices: `employee-service`, `project-service` and `task-service`. Each of these services manages its own database. The services communicate with each other via HTTP REST endpoints, coordinated through the API gateway `api-gateway`.
@@ -13,6 +13,9 @@ The containers are orchestrated for local development and testing through the do
 
 ### CI/CD
 GitHub Actions handles the build, test and deployment process for each service through `build-containers.yml`
+
+### Deployment Diagram
+![](/images/deployment-diagram.png)
 
 
 ## Employee Service
