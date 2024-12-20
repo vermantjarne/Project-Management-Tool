@@ -115,26 +115,26 @@ Every endpoint, aside from the `GET` for `/employee`, requires an authenticated 
 - Docker image: `jarnevermant/api-gateway`
 
 ### API Endpoints
-| Method | Endpoint | Description |
-| ------ | -------- | ----------- |
-| `POST` | `/employee` | Adds a new employee |
+| Method | Endpoint | Description | Auth |
+| ------ | -------- | ----------- | ---- |
+| `POST` | `/employee` | Adds a new employee | x |
 | `GET` | `/employee` | Retrieves all employees |
-| `GET` | `/employee/{employeeIdentifier}` | Retrieves an employee by id |
-| `UPDATE` | `/employee/{employeeIdentifier}` | Updates an employee |
-| `DELETE` | `/employee/{employeeIdentifier}` | Removes an employee |
-| `POST` | `/project` | Creates a new project |
-| `GET` | `/project` | Retrieves all projects |
-| `GET` | `/project/active` | Retrieves all projects currently active |
-| `GET` | `/project/{projectIdentifier}` | Retrieves a project by id |
-| `UPDATE` | `/project/{projectIdentifier}` | Updates a project |
-| `DELETE` | `/project/{projectIdentifier}` | Deletes a project |
-| `POST` | `/task` | Creates a task |
-| `GET` | `/task` | Retrieves all tasks |
-| `GET` | `/task/active` | Retrieves all tasks with status "In Progress" |
-| `GET` | `/task/{taskIdentifier}` | Retrieves a task by id |
-| `GET` | `/task/project/{projectIdentifier}` | Retrieves all tasks of a project |
-| `UPDATE` | `/task/{taskIdentifier}` | Updates a task |
-| `DELETE` | `/task/{taskIdentifier}` | Deletes a task |
+| `GET` | `/employee/{employeeIdentifier}` | Retrieves an employee by id | x |
+| `UPDATE` | `/employee/{employeeIdentifier}` | Updates an employee | x |
+| `DELETE` | `/employee/{employeeIdentifier}` | Removes an employee | x |
+| `POST` | `/project` | Creates a new project | x |
+| `GET` | `/project` | Retrieves all projects | x |
+| `GET` | `/project/active` | Retrieves all projects currently active | x |
+| `GET` | `/project/{projectIdentifier}` | Retrieves a project by id | x |
+| `UPDATE` | `/project/{projectIdentifier}` | Updates a project | x |
+| `DELETE` | `/project/{projectIdentifier}` | Deletes a project | x |
+| `POST` | `/task` | Creates a task | x |
+| `GET` | `/task` | Retrieves all tasks | x |
+| `GET` | `/task/active` | Retrieves all tasks with status "In Progress" | x |
+| `GET` | `/task/{taskIdentifier}` | Retrieves a task by id | x |
+| `GET` | `/task/project/{projectIdentifier}` | Retrieves all tasks of a project | x |
+| `UPDATE` | `/task/{taskIdentifier}` | Updates a task | x |
+| `DELETE` | `/task/{taskIdentifier}` | Deletes a task | x |
 
 
 ## Postman Screenshots
