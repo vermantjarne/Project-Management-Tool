@@ -1,5 +1,4 @@
 # Project-Management-Tool
-
 The goal of the project is creating a solution for managing employees, projects and tasks within an organization. The system is structured as a microservices architecture to ensure scalability and maintainability for future adjustments.
 
 The application contains 3 microservices: `employee-service`, `project-service` and `task-service`. Each of these services manages its own database. The services communicate with each other via HTTP REST endpoints, coordinated through the API gateway `api-gateway`.
@@ -139,5 +138,4 @@ Every endpoint, aside from the `GET` for `/employee`, requires an authenticated 
 
 
 ## Postman Screenshots
-
-Screenshots of the usage of this endpoint in Postman can be found [here](/docs/api-gateway.md).
+Screenshots of the usage of this endpoint in Postman can be found [here](/api-gateway.md).
