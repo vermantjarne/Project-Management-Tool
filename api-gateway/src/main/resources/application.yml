@@ -35,6 +35,16 @@ spring:
           filters:
             - SetPath=/api/employee
 
+        # GET employee by name
+        - id: employee-service-get-by-name
+          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/employee
+            - Method=GET
+            - Query=name={name}
+          filters:
+            - SetPath=/api/employee?name={name}
+
         # GET all employees
         - id: employee-service-get-all
           uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
@@ -52,16 +62,6 @@ spring:
             - Method=GET
           filters:
             - SetPath=/api/employee/{id}
-
-        # GET employee by name
-        - id: employee-service-get-by-name
-          uri: http://${EMPLOYEE_SERVICE_BASEURL:localhost:8080}
-          predicates:
-            - Path=/employee
-            - Method=GET
-            - Query=name={name}
-          filters:
-            - SetPath=/api/employee?name={name}
 
         # UPDATE employee
         - id: employee-service-update
@@ -90,6 +90,16 @@ spring:
           filters:
             - SetPath=/api/project
 
+        # GET project by project lead
+        - id: project-service-get-by-lead
+          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/project
+            - Method=GET
+            - Query=projectLead={projectLead}
+          filters:
+            - SetPath=/api/project?projectLead={projectLead}
+
         # GET all projects
         - id: project-service-get-all
           uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
@@ -116,16 +126,6 @@ spring:
             - Method=GET
           filters:
             - SetPath=/api/project/{id}
-
-        # GET project by project lead
-        - id: project-service-get-by-lead
-          uri: http://${PROJECT_SERVICE_BASEURL:localhost:8081}
-          predicates:
-            - Path=/project
-            - Method=GET
-            - Query=projectLead={projectLead}
-          filters:
-            - SetPath=/api/project?projectLead={projectLead}
 
         # UPDATE project
         - id: project-service-update
