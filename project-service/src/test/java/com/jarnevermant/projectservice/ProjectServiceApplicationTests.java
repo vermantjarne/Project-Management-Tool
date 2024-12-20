@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -229,7 +230,7 @@ class ProjectServiceApplicationTests {
     @Test
     public void testSearchProjectsByProjectLead_Success() {
         // Arrange
-        String searchTerm = "pow";
+        String searchTerm = "o";
 
         EmployeeResponse employee1 = new EmployeeResponse();
         employee1.setEmployeeIdentifier("EMP-123");
@@ -241,7 +242,12 @@ class ProjectServiceApplicationTests {
         employee2.setFirstName("Nicholas");
         employee2.setLastName("Thompson");
 
-        when(projectService.fetchEmployeesByName(searchTerm)).thenReturn(List.of(employee1, employee2));
+
+        when(webClient.get()).thenReturn(requestHeadersUriSpec);
+        when(requestHeadersUriSpec.uri(anyString(), any(Function.class))).thenReturn(requestHeadersSpec);
+        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(new ParameterizedTypeReference<List<EmployeeResponse>>() {}))
+                .thenReturn(Mono.just(List.of(employee1, employee2)));
 
         Project project1 = new Project();
         project1.setProjectIdentifier("PROJ-123");
@@ -272,9 +278,13 @@ class ProjectServiceApplicationTests {
     @Test
     public void testSearchProjectsByProjectLead_NotFound() {
         // Arrange
-        String searchTerm = "pow";
+        String searchTerm = "o";
 
-        when(projectService.fetchEmployeesByName(searchTerm)).thenReturn(List.of());
+        when(webClient.get()).thenReturn(requestHeadersUriSpec);
+        when(requestHeadersUriSpec.uri(anyString(), any(Function.class))).thenReturn(requestHeadersSpec);
+        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(new ParameterizedTypeReference<List<EmployeeResponse>>() {}))
+                .thenReturn(Mono.just(List.of()));
 
         when(projectRepository.findProjectsByProjectLeadIn(List.of())).thenReturn(List.of());
 

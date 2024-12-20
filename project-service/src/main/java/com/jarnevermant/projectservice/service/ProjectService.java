@@ -136,7 +136,7 @@ public class ProjectService {
                 .build();
     }
 
-    public EmployeeResponse fetchEmployeeByEmployeeIdentifier(String employeeIdentifier) {
+    private EmployeeResponse fetchEmployeeByEmployeeIdentifier(String employeeIdentifier) {
         return webClient.get()
                 .uri("http://" + employeeServiceBaseUrl + "/api/employee",
                         uriBuilder -> uriBuilder.pathSegment(employeeIdentifier).build())
@@ -149,7 +149,7 @@ public class ProjectService {
                 .block();
     }
 
-    public List<EmployeeResponse> fetchEmployeesByName(String searchTerm) {
+    private List<EmployeeResponse> fetchEmployeesByName(String searchTerm) {
         return webClient.get()
                 .uri("http://" + employeeServiceBaseUrl + "/api/employee",
                         uriBuilder -> uriBuilder.queryParam("search", searchTerm).build())
