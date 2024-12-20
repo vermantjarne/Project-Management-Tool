@@ -37,7 +37,7 @@ public class TaskController {
     @GetMapping("/{taskIdentifier}")
     @ResponseStatus(HttpStatus.OK)
     public TaskResponse getTask(@PathVariable String taskIdentifier) {
-        return taskService.getTaskBy(taskIdentifier);
+        return taskService.getTask(taskIdentifier);
     }
 
     @GetMapping("/project/{projectIdentifier}")
